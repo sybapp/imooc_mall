@@ -11,7 +11,7 @@ if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>M-GALLARY|首页</title>

@@ -9,20 +9,16 @@ if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['r
     $repassword = trim($_POST['repassword']);
 
     if (!$username) {
-        echo "用户名不能为空";
-        exit;
+        showMsg(0, "用户名不能为空");
     }
     if (!$password) {
-        echo "密码不能为空";
-        exit;
+        showMsg(0, "密码不能为空");
     }
     if (!$repassword) {
-        echo "确认密码不能为空";
-        exit;
+        showMsg(0, "确认密码不能为空");
     }
     if ($password !== $repassword) {
-        echo "两次密码输入不一致";
-        exit;
+        showMsg(0, "两次密码输入不一致");
     }
 
     // 连接数据库
@@ -41,12 +37,11 @@ if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['r
 
     // 验证用户名是否存在
     if (isset($result['total']) && $result['total'] > 0) {
-        echo "用户名已存在，请重新输入！";
-        exit;
+        showMsg(0, "用户名已存在，请重新输入！");
     }
 
     // 密码加密处理
-    $password = pwdEncryption($password);
+    $password = pwdEncrypt($password);
 
     //插入数据库
     unset($sql, $result, $result_obj);
@@ -56,17 +51,15 @@ if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['r
 
     $result = $conn->query($sql);
     if (!$result) {
-        echo sprintf("注册失败！\nError: %s", $conn->error);
-        exit;
+        showMsg(0, "注册失败！Error: {$conn->error}");
     } else {
         $userID = $conn->insert_id;
-        echo sprintf("恭喜注册成功！用户名为：%s，用户ID为：%s", $username, $userID);
-        exit;
+        showMsg(1, "用户名为：{$username}，用户ID为：{$userID}", "login.php");
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>M-GALLARY|用户注册</title>

@@ -1,10 +1,12 @@
 <?php
+
+header("Content-type: text/html");
 // 开启session
 session_start();
 
 // 判断用户是否登录
 if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
-    header('Location:./');
+    header("Location:./");
 }
 
 
@@ -17,12 +19,10 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
     $password = trim($_POST['password']);
 
     if (!$username) {
-        echo "用户名不能为空";
-        exit;
+        showMsg(0, "用户名不能为空", "login.php");
     }
     if (!$password) {
-        echo "密码不能为空";
-        exit;
+        showMsg(0, "密码不能为空", "login.php");
     }
 
     // 连接数据库
@@ -39,24 +39,22 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
     $result = $result_obj->fetch_assoc();
 
     if (!empty($result) && is_array($result)) {
-        if (pwdEncryption($password) === $result['password']) {
+        if (pwdEncrypt($password) === $result['password']) {
             $_SESSION['user'] = $result;
             header('Location:./');
             exit;
         } else {
-            echo "登录失败，请检查密码是否正确！";
-            exit;
+            showMsg(0, "登录失败，请检查密码是否正确！");
         }
     } else {
-        echo "用户不存在，请重新输入！";
-        exit;
+        showMsg(0, "用户不存在，请重新输入", "login.php");
     }
 
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>M-GALLARY|用户登录</title>
@@ -129,11 +127,8 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
                 $('#password').focus();
                 return false;
             }
-
-
             return true;
         })
-
     })
 </script>
 </html>

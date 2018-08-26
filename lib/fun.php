@@ -28,11 +28,29 @@ function mysqlInit($host, $username, $password, $database, $charset = "utf8")
  * @param $password
  * @return bool|string
  */
-function pwdEncryption($password)
+function pwdEncrypt($password)
 {
     if (!$password) {
         return false;
     }
 
-    return md5(md5($password)."password");
+    return md5(md5($password) . "password");
 }
+
+/**
+ * 信息页提示信息跳转
+ * @param int $type
+ * @param null $msg
+ * @param null $url
+ */
+function showMsg($type, $msg = null, $url = null)
+{
+    $msg = urlencode($msg);
+    $toUrl = "Location:msg.php?type={$type}";
+    $toUrl .= $msg?"&msg={$msg}":"";
+    $toUrl .= $url?"&url={$url}":"";
+
+    header($toUrl);
+    exit;
+}
+
