@@ -1,6 +1,5 @@
 <?php
 
-header("Content-type: text/html");
 // 开启session
 session_start();
 
