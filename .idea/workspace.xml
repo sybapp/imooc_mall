@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="486a787c-2522-427d-a6a9-ce56afdc496c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/delete.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/do_edit.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/fun.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib/fun.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/msg.php" beforeDir="false" afterPath="$PROJECT_DIR$/msg.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/publish.php" beforeDir="false" afterPath="$PROJECT_DIR$/publish.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/delete.php" beforeDir="false" afterPath="$PROJECT_DIR$/delete.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,14 +77,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="php" value="7798" />
+          <entry key="php" value="7939" />
           <entry key="sql" value="2" />
           <entry key="txt" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="7792" />
+          <entry key="PHP" value="7933" />
           <entry key="PLAIN_TEXT" value="8" />
           <entry key="SQL" value="8" />
         </counts>
@@ -118,8 +108,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/delete.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="19" column="1" lean-forward="true" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+            <state relative-caret-position="352">
+              <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -240,6 +230,17 @@
             </path>
             <path>
               <item name="mall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mall" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mall" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="file" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mall" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="bcb0276e:PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
             </path>
           </expand>
@@ -353,12 +354,12 @@
       <workItem from="1535710640464" duration="706000" />
       <workItem from="1535769410865" duration="2475000" />
       <workItem from="1535785933922" duration="3015000" />
-      <workItem from="1535796588153" duration="3384000" />
+      <workItem from="1535796588153" duration="3865000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55217000" />
+    <option name="totallyTimeSpent" value="55698000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -514,8 +515,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/delete.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="19" column="1" lean-forward="true" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+        <state relative-caret-position="352">
+          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
         </state>
       </provider>
     </entry>
