@@ -1,5 +1,7 @@
 <?php
 
+include_once "./lib/fun.php";
+
 // 开启session
 session_start();
 
@@ -8,10 +10,7 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
     header("Location:./");
 }
 
-
 if (!empty($_POST['username']) && !empty($_POST['password'])) {
-
-    include_once "./lib/fun.php";
 
     // trim 用语过滤空格
     $username = trim($_POST['username']);
@@ -48,6 +47,9 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
     } else {
         showMsg(0, "用户不存在，请重新输入", "login.php");
     }
+
+    // 关闭数据库连接
+    $conn->close();
 
 }
 ?>

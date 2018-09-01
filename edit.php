@@ -6,78 +6,26 @@ checkLogin();
 
 $user = $_SESSION['user'];
 
+// 校验url中的商品id是否合法
+$goodsId = isset($_GET["id"]) && is_numeric($_GET["id"]) ? intval($_GET["id"]) : "";
 
-// 表单进行了提交
-if (!empty($_POST['name'])) {
-
-    $conn = mysqlInit("localhost", "root", "password", "mall");
-
-    // 获取表单信息
-    // 名字
-    $name = $conn->real_escape_string(trim($_POST['name']));
-    // 价格
-    $price = intval($_POST['price']);
-    // 简介
-    $des = $conn->real_escape_string($_POST['des']);
-    // 详情
-    $content = $conn->real_escape_string($_POST['content']);
-    // 用户ID
-    $userID = $user['id'];
-
-    // 验证画品名字长度
-    $nameLength = mb_strlen($name);
-    if ($nameLength <= 0 || $nameLength > 30) {
-        showMsg(0, "画品名字应在1~30字符之间");
-    }
-
-    // 验证画品简介长度
-    $desLength = mb_strlen($des);
-    if ($desLength <= 0 || $desLength > 100) {
-        showMsg(0, "画品简介应在1~100字符之间");
-    }
-
-    // 验证画品价格
-    if ($price <= 0 || $price > 99999999999) {
-        showMsg(0, "画品价格应在1~99999999999之间");
-    }
-
-    // 验证画品详情
-    if (empty($content)) {
-        showMsg(0, "画品详情不能为空");
-    }
-
-    // 图片上传
-    $pic = imgUpload($_FILES['file']);
-
-    // 画品名称重复性验证
-    $sql = "SELECT COUNT(`id`) AS `total` FROM `goods` WHERE `name` = '{$name}'";
-
-    $result_obj = $conn->query($sql);
-    $result = $result_obj->fetch_assoc();
-    // var_dump($result);
-    // 验证画品名称是否存在
-    if (isset($result['total']) && $result['total'] > 0) {
-        showMsg(0, "画品名称已存在");
-    }
-
-    $create_time = date("Y-m-d H:i:s");
-
-    // 数据入库
-    $sql = "INSERT INTO `goods` (`name`, `price`, `des`, `content`, `pic`, `user_id`, `create_time`, `update_time`, `view`)"
-        . " VALUES ('{$name}', '{$price}', '{$des}', '{$content}', '{$pic}', '{$userID}', '{$create_time}', '{$create_time}', 0)";
-
-    var_dump($conn);
-    if ($result_obj = $conn->query($sql)) {
-        showMsg(1, "添加画品成功！", "./");
-    } else {
-
-        showMsg(0, "{$conn->error}");
-    }
-
-    // 关闭数据库连接
-    $conn->close();
-
+if (empty($goodsId)) {
+    showMsg(0, "商品ID非法", "./");
 }
+// $id = mysqli_real_escape_string(trim($_GET["id"]));
+
+// 判断商品ID是否存在数据库，并获取数据库信息以供用户编辑
+$conn = mysqlInit("localhost", "root", "password", "mall");
+
+$sql = "SELECT * FROM `goods` WHERE `id` = {$goodsId} LIMIT 1";
+
+$result_obj = $conn->query($sql);
+$goods = $result_obj->fetch_assoc();
+
+if (!$goods) {
+    showMsg(0, "画品不存在", "./");
+}
+
 
 ?>
 
@@ -85,7 +33,7 @@ if (!empty($_POST['name'])) {
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>M-GALLARY|发布画品</title>
+    <title>M-GALLARY|编辑画品</title>
     <link type="text/css" rel="stylesheet" href="./static/css/common.css">
     <link type="text/css" rel="stylesheet" href="./static/css/add.css">
 </head>
@@ -104,14 +52,16 @@ if (!empty($_POST['name'])) {
 <div class="content">
     <div class="addwrap">
         <div class="addl fl">
-            <header>发布画品</header>
-            <form name="publish-form" id="publish-form" action="publish.php" method="post"
+            <header>编辑画品</header>
+            <form name="publish-form" id="publish-form" action="do_edit.php" method="post"
                   enctype="multipart/form-data">
                 <div class="additem">
-                    <label id="for-name">画品名称</label><input type="text" name="name" id="name" placeholder="请输入画品名称">
+                    <label id="for-name">画品名称</label><input type="text" name="name" id="name" placeholder="请输入画品名称"
+                                                            value="<?php echo $goods['name'] ?>">
                 </div>
                 <div class="additem">
-                    <label id="for-price">价值</label><input type="text" name="price" id="price" placeholder="请输入画品价值">
+                    <label id="for-price">价值</label><input type="text" name="price" id="price" placeholder="请输入画品价值"
+                                                           value="<?php echo $goods['price'] ?>">
                 </div>
                 <div class="additem">
                     <!-- 使用accept html5属性 声明仅接受png gif jpeg格式的文件                -->
@@ -120,17 +70,19 @@ if (!empty($_POST['name'])) {
                 </div>
                 <div class="additem textwrap">
                     <label class="ptop" id="for-des">画品简介</label><textarea id="des" name="des"
-                                                                           placeholder="请输入画品简介"></textarea>
+                                                                           placeholder="请输入画品简介"><?php echo $goods['des'] ?></textarea>
                 </div>
                 <div class="additem textwrap">
                     <label class="ptop" id="for-content">画品详情</label>
                     <div style="margin-left: 120px" id="container">
-                        <textarea id="content" name="content"></textarea>
+                        <textarea id="content" name="content"><?php echo $goods['content'] ?></textarea>
                     </div>
 
                 </div>
                 <div style="margin-top: 20px">
-                    <button type="submit">发布</button>
+                    <!-- 表单添加一个隐藏id用于在 `do_edit.php` 获取商品id的值 -->
+                    <input type="hidden" name="id" value="<?php echo $goods['id'] ?>">
+                    <button type="submit">保存</button>
                 </div>
 
             </form>
@@ -193,12 +145,12 @@ if (!empty($_POST['name'])) {
                 return false;
             }
 
-            if (file == '' || file.length <= 0) {
-                layer.tips('请选择图片', '#file', {time: 2000, tips: 2});
-                $('#file').focus();
-                return false;
-
-            }
+            // if (file == '' || file.length <= 0) {
+            //     layer.tips('请选择图片', '#file', {time: 2000, tips: 2});
+            //     $('#file').focus();
+            //     return false;
+            //
+            // }
 
             if (des.length <= 0 || des.length >= 100) {
                 layer.tips('画品简介应在1-100字符之内', '#content', {time: 2000, tips: 2});
@@ -217,4 +169,5 @@ if (!empty($_POST['name'])) {
     })
 </script>
 </html>
+
 

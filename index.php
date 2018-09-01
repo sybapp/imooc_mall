@@ -1,12 +1,8 @@
 <?php
-// 开启session
-session_start();
 
-// 判断用户是否登录
-if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
-    header('Location:./login.php');
-    exit;
-}
+include_once "./lib/fun.php";
+
+checkLogin();
 
 ?>
 

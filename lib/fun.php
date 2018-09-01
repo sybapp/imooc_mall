@@ -10,13 +10,11 @@
 function mysqlInit($host, $username, $password, $database, $charset = "utf8")
 {
     // 面向对象连接数据库
-    $conn = new mysqli("$host", "$username", "$password");
+    $conn = new mysqli("$host", "$username", "$password", "$database");
     if ($conn->connect_error) {
         return false;
     }
     // echo "连接成功";
-    // 选择数据库
-    $conn->select_db("$database");
     // 设置字符集
     $conn->set_charset("$charset");
     // 返回的是一个对象
@@ -102,4 +100,20 @@ function imgUpload($file)
         showMsg("服务器繁忙，请稍候再试");
     }
     return $imgUrl;
+}
+
+/**
+ * 检查用户是否登录
+ * @return bool
+ */
+function checkLogin()
+{
+    // 开启session
+    session_start();
+
+    // 判断用户是否登录
+    if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {
+        showMsg(0, "请登录", "login.php");
+    }
+    return true;
 }

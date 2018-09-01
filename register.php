@@ -1,4 +1,5 @@
 <?php
+
 if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['repassword'])) {
 
     include_once "./lib/fun.php";

@@ -8,15 +8,14 @@ if ($_GET['type'] == 1 || $_GET['type'] == 0) {
     $type = 0;
 }
 
-// 设置title
-$title = $type == 1 ? "登录成功" : "登录失败";
-
 // 获取提示信息
 $msg = isset($_GET['msg']) && !empty($_GET['msg']) ? trim($_GET['msg']) : null;
 
 // 获取跳转url
 $url = isset($_GET['url']) && !empty($_GET['url']) ? trim($_GET['url']) : null;
 
+// 设置title
+$title = $msg;
 
 ?>
 <!DOCTYPE html>
