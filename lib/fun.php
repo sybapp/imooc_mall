@@ -117,3 +117,126 @@ function checkLogin()
     }
     return true;
 }
+
+/**
+ * 获取当前url
+ * @return string
+ */
+function getUrl()
+{
+    $url = '';
+    $url .= $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+    $url .= $_SERVER['HTTP_HOST'];
+    $url .= $_SERVER['REQUEST_URI'];
+    return $url;
+}
+
+/**
+ * 根据page生成url
+ * @param $page
+ * @param string $url
+ * @return string
+ */
+function pageUrl($page, $url = '')
+{
+    $url = empty($url) ? getUrl() : $url;
+
+    // 查询url是否存在
+    $pos = strpos($url, '?');
+
+    if ($pos == false) {
+        $url .= "?page=" . $page;
+    } else {
+        $queryString = substr($url, $pos + 1);
+        parse_str($queryString, $queryArr);
+        if (isset($queryArr["page"]))
+        {
+            unset($queryArr["page"]);
+        }
+        $queryArr["page"] = $page;
+
+        $queryStr = http_build_query($queryArr);
+
+        $url = substr($url, 0, $pos) . "?" . $queryStr;
+    }
+
+    return $url;
+
+}
+
+
+/**
+ * 根据逻辑分页显示
+ * @param $total
+ * @param $currentPage
+ * @param $pageSize
+ * @param int $showNum
+ * @return string
+ */
+function getPages($total, $currentPage, $pageSize, $showNum = 5)
+{
+    $pageStr = '';
+
+    // 当总数大于分页数时
+    if ($total > $pageSize) {
+
+        // 向上取整获取总页数
+        $totalPage = ceil($total / $pageSize);
+
+        // 对当前页进行容错处理
+        $currentPage = $currentPage > $totalPage ? $totalPage : $currentPage;
+
+        // 获取外层 div
+        $pageStr .= "<div class=\"page-nav\"><ul>";
+
+        $homePage = pageUrl(1);
+
+
+        if ($currentPage > 1) {
+            $nextPage = pageUrl($currentPage - 1);
+            $pageStr .= "<li><a href=\"{$homePage}\">首页</a></li><li><a href=\"{$nextPage}\">上一页</a></li>";
+        }
+
+        // 1 2 3 4 5 6 7 8 9
+        // 分页起始显示页面
+        $from = max($currentPage - intval($showNum / 2), 1);
+        $to = $from + ($showNum - 1);
+
+        if ($to > $totalPage) {
+            $to = $totalPage;
+            $from = max($to - $showNum + 1, 1);
+        }
+
+        if ($from > 1) {
+            $pageStr .= "<li>...</li>";
+        }
+
+        for ($i = $from; $i <= $to; $i++) {
+            $page = pageUrl($i);
+            if ($i != $currentPage) {
+                $pageStr .= "<li><a href=\"{$page}\">{$i}</a></li>";
+            } else {
+                $pageStr .= "<li><span class=\"curr-page\">{$i}</span></li>";
+            }
+        }
+
+        if ($to < $totalPage)
+        {
+            $pageStr .= "<li>...</li>";
+        }
+
+        $endPage = pageUrl($totalPage);
+
+        if ($currentPage < $totalPage) {
+            $upPage = pageUrl($currentPage + 1);
+            $pageStr .= "<li><a href=\"{$upPage}\">下一页</a></li><li><a href=\"{$endPage}\">尾页</a></li>";
+        }
+        // 闭合 div 标签
+        $pageStr .= "</ul></div>";
+    }
+    return $pageStr;
+}
+
+
+
+

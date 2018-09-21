@@ -26,6 +26,8 @@ if (!$goods) {
     showMsg(0, "画品不存在", "./");
 }
 
+// 关闭数据库连接
+$conn->close();
 
 ?>
 
@@ -44,8 +46,9 @@ if (!$goods) {
     </div>
     <div class="auth fr">
         <ul>
+            <li><a href="./">首页</a></li>
             <li><span>管理员: <?php echo $user['username'] ?></span></li>
-            <li><a href="#">退出</a></li>
+            <li><a href="login_out.php">退出</a></li>
         </ul>
     </div>
 </div>
@@ -144,13 +147,6 @@ if (!$goods) {
                 $('#price').focus();
                 return false;
             }
-
-            // if (file == '' || file.length <= 0) {
-            //     layer.tips('请选择图片', '#file', {time: 2000, tips: 2});
-            //     $('#file').focus();
-            //     return false;
-            //
-            // }
 
             if (des.length <= 0 || des.length >= 100) {
                 layer.tips('画品简介应在1-100字符之内', '#content', {time: 2000, tips: 2});

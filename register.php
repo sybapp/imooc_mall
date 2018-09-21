@@ -57,6 +57,9 @@ if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['r
         $userID = $conn->insert_id;
         showMsg(1, "用户名为：{$username}，用户ID为：{$userID}", "login.php");
     }
+
+    // 关闭数据库连接
+    $conn->close();
 }
 ?>
 <!DOCTYPE html>
@@ -75,6 +78,7 @@ if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['r
     </div>
     <div class="auth fr">
         <ul>
+            <li><a href="./">首页</a></li>
             <li><a href="login.php">登录</a></li>
             <li><a href="register.php">注册</a></li>
         </ul>

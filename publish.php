@@ -68,7 +68,7 @@ if (!empty($_POST['name'])) {
 
     var_dump($conn);
     if ($result_obj = $conn->query($sql)) {
-        showMsg(1, "添加画品成功！", "./");
+        showMsg(1, "添加画品成功", "./");
     } else {
 
         showMsg(0, "{$conn->error}");
@@ -96,8 +96,9 @@ if (!empty($_POST['name'])) {
     </div>
     <div class="auth fr">
         <ul>
+            <li><a href="./">首页</a></li>
             <li><span>管理员: <?php echo $user['username'] ?></span></li>
-            <li><a href="#">退出</a></li>
+            <li><a href="login_out.php">退出</a></li>
         </ul>
     </div>
 </div>
